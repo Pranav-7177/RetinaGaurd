@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="retinaBg3" cx="48%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9A3412" />
+      <stop offset="50%" stop-color="#581C87" />
+      <stop offset="90%" stop-color="#3B0764" />
+      <stop offset="100%" stop-color="#000000" />
+    </radialGradient>
+    <filter id="softExudateGlow">
+      <feGaussianBlur stdDeviation="2.5" />
+    </filter>
+  </defs>
+
+  <circle cx="300" cy="300" r="280" fill="url(#retinaBg3)" />
+  <ellipse cx="170" cy="290" rx="34" ry="44" fill="#FEF08A" opacity="0.9" />
+
+  <!-- Vessels with beading -->
+  <path d="M 170 270 Q 200 170 270 140 T 390 125" stroke="#7F1D1D" stroke-width="8" fill="none" opacity="0.8" />
+  <path d="M 170 310 Q 210 400 290 440 T 410 460" stroke="#7F1D1D" stroke-width="8.5" fill="none" opacity="0.8" />
+
+  <!-- Cotton wool spots (soft exudates - fluffy white ischemic patches) -->
+  <ellipse cx="320" cy="200" rx="18" ry="12" fill="#F8FAFC" opacity="0.85" filter="url(#softExudateGlow)" />
+  <ellipse cx="430" cy="240" rx="14" ry="10" fill="#F8FAFC" opacity="0.8" filter="url(#softExudateGlow)" />
+  <ellipse cx="360" cy="390" rx="16" ry="11" fill="#F8FAFC" opacity="0.85" filter="url(#softExudateGlow)" />
+
+  <!-- Extensive flame and blot hemorrhages across >2 quadrants -->
+  <g fill="#991B1B" opacity="0.9">
+    <ellipse cx="230" cy="180" rx="16" ry="9" transform="rotate(-20 230 180)" />
+    <ellipse cx="260" cy="160" rx="12" ry="7" transform="rotate(-35 260 160)" />
+    <ellipse cx="400" cy="360" rx="18" ry="10" transform="rotate(25 400 360)" />
+    <ellipse cx="450" cy="380" rx="15" ry="8" transform="rotate(15 450 380)" />
+    <ellipse cx="220" cy="410" rx="20" ry="11" transform="rotate(40 220 410)" />
+    <ellipse cx="270" cy="430" rx="14" ry="8" transform="rotate(20 270 430)" />
+  </g>
+</svg>

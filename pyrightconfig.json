@@ -1,0 +1,25 @@
+{
+  "include": [
+    "backend",
+    "ml"
+  ],
+  "exclude": [
+    "**/__pycache__",
+    "**/node_modules",
+    "frontend"
+  ],
+  "pythonVersion": "3.11",
+  "pythonPlatform": "Windows",
+  "executionEnvironments": [
+    {
+      "root": "backend",
+      "extraPaths": [
+        "C:/Users/sreek/AppData/Local/Programs/Python/Python311/Lib/site-packages",
+        "C:/Users/sreek/AppData/Roaming/Python/Python311/site-packages",
+        "."
+      ]
+    }
+  ],
+  "reportMissingImports": "none",
+  "reportMissingTypeStubs": false
+}

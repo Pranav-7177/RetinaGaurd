@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="retinaBg2" cx="48%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#B45309" />
+      <stop offset="60%" stop-color="#881337" />
+      <stop offset="90%" stop-color="#4C0519" />
+      <stop offset="100%" stop-color="#000000" />
+    </radialGradient>
+    <radialGradient id="opticDisc2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="70%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#B45309" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="300" cy="300" r="280" fill="url(#retinaBg2)" />
+
+  <!-- Optic Disc -->
+  <ellipse cx="170" cy="290" rx="36" ry="46" fill="url(#opticDisc2)" opacity="0.95" />
+
+  <!-- Macula -->
+  <circle cx="340" cy="305" r="30" fill="#2E1065" opacity="0.4" />
+  <circle cx="340" cy="305" r="5" fill="#1C1917" opacity="0.8" />
+
+  <!-- Vessels -->
+  <g stroke="#881337" stroke-linecap="round" fill="none">
+    <path d="M 170 270 Q 200 170 270 140 T 390 125 T 480 160" stroke-width="7" opacity="0.85" />
+    <path d="M 170 310 Q 210 400 290 440 T 410 460 T 490 420" stroke-width="7.5" opacity="0.85" />
+  </g>
+
+  <!-- Pathological Lesions: Microaneurysms (Red pinpoints) -->
+  <g fill="#EF4444" stroke="#7F1D1D" stroke-width="0.5">
+    <circle cx="260" cy="230" r="3" />
+    <circle cx="280" cy="210" r="3.5" />
+    <circle cx="255" cy="360" r="3" />
+    <circle cx="310" cy="380" r="4" />
+    <circle cx="380" cy="260" r="3.5" />
+    <circle cx="410" cy="240" r="3" />
+  </g>
+
+  <!-- Pathological Lesions: Hard Exudates (Waxy yellow clusters) -->
+  <g fill="#FEF08A" stroke="#EAB308" stroke-width="0.8" opacity="0.95">
+    <ellipse cx="360" cy="275" rx="5" ry="3" />
+    <ellipse cx="366" cy="280" rx="4" ry="4" />
+    <ellipse cx="372" cy="273" rx="6" ry="3.5" />
+    <ellipse cx="355" cy="285" rx="4" ry="2.5" />
+    <circle cx="385" cy="290" r="3" />
+    <circle cx="392" cy="295" r="4.5" />
+    <ellipse cx="378" cy="340" rx="5" ry="3" />
+    <circle cx="385" cy="345" r="3.5" />
+  </g>
+
+  <!-- Blot Hemorrhages (Dark irregular pools) -->
+  <g fill="#7F1D1D" opacity="0.88">
+    <ellipse cx="230" cy="380" rx="8" ry="6" />
+    <ellipse cx="420" cy="330" rx="9" ry="5" />
+  </g>
+</svg>

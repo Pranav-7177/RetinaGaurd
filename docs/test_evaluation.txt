@@ -1,0 +1,45 @@
+==================================================================
+             RETINAGUARD FINAL TEST EVALUATION REPORT
+==================================================================
+
+MODEL INFORMATION:
+------------------
+Model Architecture:       EfficientNet-B0 (Transfer Learning)
+Checkpoint Used:          C:\Users\sreek\Desktop\RetinaGaurd\models\retinaguard_best.pth
+Best Checkpoint Epoch:    6
+Number of Test Samples:   526
+Best Validation Macro F1: 0.6777
+
+OVERALL TEST METRICS:
+---------------------
+Test Accuracy:            0.8023 (80.23%)
+Test Macro F1:            0.6494
+Test Weighted F1:         0.8100
+Correct Predictions:      422 / 526
+Incorrect Predictions:    104 / 526
+
+PER-CLASS METRICS:
+------------------
+Class ID   Class Name           Samples    Precision    Recall       F1-Score  
+--------------------------------------------------------------------------
+0          No DR                270        0.9886       0.9667       0.9775    
+1          Mild NPDR            51         0.5000       0.7059       0.5854    
+2          Moderate NPDR        138        0.7731       0.6667       0.7160    
+3          Severe NPDR          27         0.3191       0.5556       0.4054    
+4          Proliferative DR     40         0.7500       0.4500       0.5625    
+--------------------------------------------------------------------------
+
+CONFUSION MATRIX (Rows: True Class, Columns: Predicted Class):
+--------------------------------------------------------------
+                            No DR    Mild NPDR Moderate NPDR  Severe NPDR Proliferative DR
+No DR                         261            8            1            0            0
+Mild NPDR                       3           36           12            0            0
+Moderate NPDR                   0           22           92           23            1
+Severe NPDR                     0            1            6           15            5
+Proliferative DR                0            5            8            9           18
+
+DISCLAIMER:
+-----------
+This evaluation report is generated for model testing and research purposes only.
+No medical diagnostic claims are made. Not for direct clinical diagnosis.
+==================================================================

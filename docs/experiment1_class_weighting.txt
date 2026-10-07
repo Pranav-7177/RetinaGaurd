@@ -1,0 +1,99 @@
+==========================================================================================
+          RETINAGUARD EXPERIMENT 1 REPORT: CONSERVATIVE CLASS-WEIGHTED LOSS               
+==========================================================================================
+
+1. EXPERIMENT OVERVIEW & DESCRIPTION
+------------------------------------------------------------------------------------------
+Experiment Name:  Conservative Square-Root Class Weighting Strategy
+Objective:        Improve validation Macro F1 (Baseline Epoch 6: 0.6777) and boost minority
+                  DR classes (Mild NPDR, Severe NPDR, Proliferative DR) without sacrificing
+                  No DR specificity.
+Architecture:     EfficientNet-B0 (5 classes)
+Training Set:     data/processed/train.csv (2452 samples)
+Validation Set:   data/processed/validation.csv (526 samples)
+Test Set:         data/processed/test.csv (526 samples) - STRICTLY UNTOUCHED
+Checkpoint Used:  models/retinaguard_exp1_best.pth
+
+2. MATHEMATICAL JUSTIFICATION & CLASS WEIGHTS
+------------------------------------------------------------------------------------------
+Baseline (Aggressive Inverse Balanced):
+  Formula:        w_c = N / (K * n_c)
+  Weights:        Class 0: 0.3901, Class 1: 2.0780, Class 2: 0.7603, Class 3: 3.9548, Class 4: 2.5811
+  Ratio (Max/Min): 10.14x (Class 3 is weighted 10.14x higher than Class 0)
+  Problem:        Class 0 (51.3% of dataset) was down-weighted to 0.3901, causing gradient instability
+                  and false positive spillover into minority classes.
+
+Experiment 1 (Conservative Square-Root Frequency):
+  Formula:        w_c proportional to sqrt(N / n_c), normalized so sum(w_c) = K (5.0)
+  Weights:        Class 0: 0.4780, Class 1: 1.1032, Class 2: 0.6673, Class 3: 1.5219, Class 4: 1.2295
+  Ratio (Max/Min): 3.18x (Class 3 is weighted 3.18x higher than Class 0)
+  Advantages:     Variance-stabilizing (sampling variance scales as O(1/sqrt(n_c))).
+                  Preserves dominant Class 0 loss gradient (raised to 0.4780) while giving
+                  rare classes a healthy 2.3x - 3.2x relative boost over Class 0 without distortion.
+
+3. TRAINING LOGS PER EPOCH
+------------------------------------------------------------------------------------------
+Epoch   | LR        | Train Loss | Train Acc  | Train F1   | Val Loss   | Val Acc    | Val F1    
+----------------------------------------------------------------------------------------
+1       | 1.00e-04  | 1.0784     | 68.92    % | 0.4274     | 0.7370     | 79.28    % | 0.5703    
+2       | 1.00e-04  | 0.7664     | 78.71    % | 0.6105     | 0.7047     | 78.33    % | 0.5923    
+3       | 1.00e-04  | 0.6354     | 82.79    % | 0.6715     | 0.6072     | 81.75    % | 0.6548    
+4       | 1.00e-04  | 0.5633     | 84.46    % | 0.7065     | 0.6267     | 80.42    % | 0.6421    
+5       | 1.00e-04  | 0.5103     | 85.11    % | 0.7258     | 0.7131     | 81.18    % | 0.6534    
+6       | 5.00e-05  | 0.4330     | 88.05    % | 0.7871     | 0.6635     | 80.99    % | 0.6539    
+7       | 5.00e-05  | 0.3361     | 91.03    % | 0.8357     | 0.6993     | 81.94    % | 0.6769    
+8       | 5.00e-05  | 0.2891     | 92.21    % | 0.8585     | 0.7249     | 82.70    % | 0.6876    
+9       | 5.00e-05  | 0.2571     | 93.03    % | 0.8752     | 0.7330     | 80.99    % | 0.6585    
+10      | 5.00e-05  | 0.2612     | 92.99    % | 0.8702     | 0.7701     | 82.13    % | 0.6706    
+----------------------------------------------------------------------------------------
+
+4. BEST EPOCH & VALIDATION SUMMARY COMPARISON
+------------------------------------------------------------------------------------------
+Metric                      Baseline (Epoch 6)       Experiment 1 (Epoch 8)       Delta
+----------------------------------------------------------------------------------------
+Validation Accuracy:         81.56%                  82.70%                +1.14%
+Validation Macro F1:        0.6777                  0.6876                +0.0099
+Validation Weighted F1:     0.8187                  0.8269                +0.0082
+
+5. PER-CLASS VALIDATION PERFORMANCE COMPARISON
+------------------------------------------------------------------------------------------
+Class ID & Name      | Baseline (P / R / F1)    | Exp 1 (P / R / F1)       | F1 Delta  | Support 
+--------------------------------------------------------------------------------------------
+0: No DR             | 0.98 / 0.97 / 0.9758     | 0.98 / 0.99 / 0.9833     | +0.0075   | 269     
+1: Mild NPDR         | 0.48 / 0.71 / 0.5714     | 0.56 / 0.65 / 0.6000     | +0.0286   | 51      
+2: Moderate NPDR     | 0.77 / 0.69 / 0.7273     | 0.74 / 0.73 / 0.7319     | +0.0046   | 139     
+3: Severe NPDR       | 0.47 / 0.58 / 0.5172     | 0.52 / 0.54 / 0.5283     | +0.0111   | 26      
+4: Proliferative DR  | 0.77 / 0.49 / 0.5970     | 0.67 / 0.54 / 0.5946     | -0.0024   | 41      
+--------------------------------------------------------------------------------------------
+
+6. VALIDATION CONFUSION MATRIX (5x5)
+------------------------------------------------------------------------------------------
+True \ Pred          No DR  Mild NP  Moderat  Severe   Prolife
+------------------------------------------------------------
+0: No DR              265        4        0        0        0
+1: Mild NPDR            2       33       15        0        1
+2: Moderate NPDR        3       20      101        8        7
+3: Severe NPDR          0        0        9       14        3
+4: Proliferative DR       0        2       12        5       22
+
+7. DETAILED ANALYSIS
+------------------------------------------------------------------------------------------
+a. Minority Class Performance (Mild, Severe, Proliferative):
+   - Class 1 (Mild NPDR):        F1 changed by +0.0286 (Baseline: 0.5714 -> Exp 1: 0.6000)
+   - Class 3 (Severe NPDR):      F1 changed by +0.0111 (Baseline: 0.5172 -> Exp 1: 0.5283)
+   - Class 4 (Proliferative DR): F1 changed by -0.0024 (Baseline: 0.5970 -> Exp 1: 0.5946)
+
+b. Dominant Class (No DR) Impact:
+   - Class 0 F1 changed by +0.0075 (Baseline: 0.9758 -> Exp 1: 0.9833)
+   - Precision: 0.9815, Recall: 0.9851
+
+c. Overall Macro F1 Impact:
+   - Macro F1 changed by +0.0099 (Baseline: 0.6777 -> Exp 1: 0.6876)
+
+8. FINAL RECOMMENDATION & MODEL SELECTION DECISION
+------------------------------------------------------------------------------------------
+Status: CANDIDATE FOR FUTURE TESTING
+Rule Applied: Strict rule that test set evaluation is ONLY allowed if validation Macro F1
+              strictly beats baseline 0.6777.
+Conclusion:   Experiment 1 achieved 0.6876 > 0.6777. Recommended for candidate pool.
+==========================================================================================

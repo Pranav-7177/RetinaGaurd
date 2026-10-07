@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="retinaBg" cx="48%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C2410C" />
+      <stop offset="60%" stop-color="#9A3412" />
+      <stop offset="90%" stop-color="#7C2D12" />
+      <stop offset="100%" stop-color="#000000" />
+    </radialGradient>
+    <radialGradient id="opticDisc" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FEF08A" />
+      <stop offset="40%" stop-color="#FDE047" />
+      <stop offset="85%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </radialGradient>
+    <radialGradient id="fovea" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#451A03" />
+      <stop offset="70%" stop-color="#78350F" />
+      <stop offset="100%" stop-color="#9A3412" stop-opacity="0" />
+    </radialGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Fundus Background Circle -->
+  <circle cx="300" cy="300" r="280" fill="url(#retinaBg)" />
+
+  <!-- Optic Disc (Nasal) -->
+  <ellipse cx="180" cy="290" rx="38" ry="48" fill="url(#opticDisc)" opacity="0.95" />
+  <ellipse cx="180" cy="290" rx="16" ry="22" fill="#FEF9C3" opacity="0.8" />
+
+  <!-- Macula / Fovea (Temporal) -->
+  <circle cx="340" cy="310" r="32" fill="url(#fovea)" opacity="0.85" />
+  <circle cx="340" cy="310" r="6" fill="#291004" opacity="0.9" />
+
+  <!-- Retinal Vascular Tree (Arterioles and Venules) -->
+  <g stroke="#7F1D1D" stroke-linecap="round" fill="none">
+    <!-- Superior temporal arcade -->
+    <path d="M 180 270 Q 200 180 270 140 T 380 120 T 480 160" stroke-width="7" opacity="0.85" />
+    <path d="M 180 275 Q 210 190 280 150 T 390 135" stroke="#991B1B" stroke-width="4" opacity="0.9" />
+    <!-- Inferior temporal arcade -->
+    <path d="M 180 310 Q 210 400 290 440 T 400 460 T 490 420" stroke-width="7.5" opacity="0.85" />
+    <path d="M 180 305 Q 220 390 300 430 T 410 445" stroke="#991B1B" stroke-width="4.5" opacity="0.9" />
+    <!-- Superior nasal branches -->
+    <path d="M 170 260 Q 140 180 90 130" stroke-width="5" opacity="0.8" />
+    <!-- Inferior nasal branches -->
+    <path d="M 170 320 Q 130 390 80 440" stroke-width="5.5" opacity="0.8" />
+    <!-- Small macula arterioles -->
+    <path d="M 280 170 Q 310 230 330 270" stroke="#991B1B" stroke-width="2" opacity="0.75" />
+    <path d="M 290 420 Q 320 370 335 340" stroke="#991B1B" stroke-width="2" opacity="0.75" />
+  </g>
+</svg>
